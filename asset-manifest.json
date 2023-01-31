@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/reactseatpicker2/static/css/main.073c9b0a.css",
+    "main.js": "/reactseatpicker2/static/js/main.19ce658e.js",
+    "static/js/787.840b363c.chunk.js": "/reactseatpicker2/static/js/787.840b363c.chunk.js",
+    "index.html": "/reactseatpicker2/index.html",
+    "main.073c9b0a.css.map": "/reactseatpicker2/static/css/main.073c9b0a.css.map",
+    "main.19ce658e.js.map": "/reactseatpicker2/static/js/main.19ce658e.js.map",
+    "787.840b363c.chunk.js.map": "/reactseatpicker2/static/js/787.840b363c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.19ce658e.js"
+  ]
+}
