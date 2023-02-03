@@ -1,32 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function ReactSeatPicker() {
   const [seats, setSeats] = useState([
-    ['grey', 'grey', 'grey'],
-    ['grey', 'grey', 'grey'],
+    [
+      {
+        id: 1,
+        row: 'A',
+        seatNumber: 1,
+        status: 'unreserved',
+      },
+      {
+        id: 2,
+        row: 'A',
+        seatNumber: 2,
+        status: 'reserved',
+      },
+      {
+        id: 3,
+        row: 'A',
+        seatNumber: 3,
+        status: 'booked',
+      },
+    ],
+    [
+      {
+        id: 4,
+        row: 'B',
+        seatNumber: 1,
+        status: 'unreserved',
+      },
+      {
+        id: 5,
+        row: 'B',
+        seatNumber: 2,
+        status: 'reserved',
+      },
+      {
+        id: 6,
+        row: 'B',
+        seatNumber: 3,
+        status: 'booked',
+      },
+    ],
   ]);
 
   const handleSeatClick = (rowIndex, seatIndex) => {
-    if (seats[rowIndex][seatIndex] === 'grey') {
-      const updatedSeats = [...seats];
-      updatedSeats[rowIndex][seatIndex] = 'green';
+    const updatedSeats = [...seats];
+    const seat = updatedSeats[rowIndex][seatIndex];
+    if (seat.status === 'unreserved') {
+      seat.status = 'reserved';
       setSeats(updatedSeats);
-    } else if (seats[rowIndex][seatIndex] === 'green') {
-      const updatedSeats = [...seats];
-      updatedSeats[rowIndex][seatIndex] = 'grey';
+    } else if (seat.status === 'reserved') {
+      seat.status = 'unreserved';
       setSeats(updatedSeats);
     }
   };
 
   const handleSaveClick = () => {
     const updatedSeats = [...seats];
-    for (let i = 0; i < updatedSeats.length; i++) {
-      for (let j = 0; j < updatedSeats[i].length; j++) {
-        if (updatedSeats[i][j] === 'green') {
-          updatedSeats[i][j] = 'orange';
+    updatedSeats.forEach((row) => {
+      row.forEach((seat) => {
+        if (seat.status === 'reserved') {
+          seat.status = 'booked';
         }
-      }
-    }
+      });
+    });
     setSeats(updatedSeats);
   };
 
@@ -36,28 +74,35 @@ function ReactSeatPicker() {
       {seats.map((row, rowIndex) => (
         <div key={rowIndex} style={{ marginBottom: '20px' }}>
           <div style={{ display: 'inline-block', marginRight: '10px' }}>
-            {rowIndex === 0 ? 'A' : 'B'}
+            {row[0].row}
           </div>
           {row.map((seat, seatIndex) => (
             <div
-              key={seatIndex}
+              key={seat.id}
               style={{
                 width: '50px',
                 height: '50px',
-                backgroundColor: seat,
+                backgroundColor:
+                  seat.status === 'unreserved'
+                    ? 'grey'
+                    : seat.status === 'reserved'
+                    ? 'green'
+                    : 'orange',
                 display: 'inline-block',
                 marginRight: '10px',
                 textAlign: 'center',
               }}
               onClick={() => handleSeatClick(rowIndex, seatIndex)}
             >
-              {seatIndex + 1}
+              {seat.seatNumber}
+              {seat.row}
+              {seat.id}
             </div>
           ))}
         </div>
       ))}
-
       <button onClick={handleSaveClick}>Save Booking</button>
+
       <br />
       <br />
       <div
@@ -80,7 +125,13 @@ function ReactSeatPicker() {
           }}
         />
 
-        <p style={{ marginLeft: '10px' }}>Reserved</p>
+        <p
+          style={{
+            marginLeft: '10px',
+          }}
+        >
+          Reserved
+        </p>
         <div
           style={{
             width: '20px',
